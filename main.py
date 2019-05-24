@@ -158,7 +158,7 @@ async def on_msg(message):
         message.channel.id==579140367207628820) and \
         message.author.bot == False and m[0] != "uwu":
         #message.author.id != "267499094090579970":
-        await gainxp(message)
+        await gainxp(message,bot)
 
 bot.add_listener(on_msg, 'on_message')
 

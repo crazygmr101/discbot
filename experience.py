@@ -58,7 +58,7 @@ def recalc():
     for i in da:
         setxp(int(i[0]),i[1])
 
-async def gainxp(message): # function to gain xp from talking
+async def gainxp(message, bot): # function to gain xp from talking
     # id, xp, lvl
     user = message.author
     print(user.id)
@@ -84,7 +84,9 @@ async def gainxp(message): # function to gain xp from talking
         cc.execute("update xp set xp=?, lvl=? where id=?",(xp,lvl,id))
     c.commit()
     c.close()
+    await update_ldb(bot)
     print(d)
+
 
 async def glevel(ctx):
     c = sqlite3.connect("users.db")
@@ -120,6 +122,24 @@ def ldb():
 
 def lkey(val):
     return val[1]
+
+async def update_ldb(bot):
+    da = ldb()
+    g = bot.get_guild(570393863559315456)
+    s = "```Rnk  Lvl  Name\n" + \
+        "--------------------------------------------------\n"
+    r = 1
+    for i in da:
+        try:
+            u = g.get_member(int(i[0]))
+            xp = i[1]
+            lvl = i[2]
+            s += str(r) + '\t' + str(lvl) + '\t' + get_name(u) + ' (' + str(xp) + ' UwuXP)\n'
+            r += 1
+        except:
+            pass
+    s += "```"
+    await (await g.get_channel(581278386522030115).fetch_message(581284105866706965)).edit(content=s)
 
 def sanitize():
     c = sqlite3.connect("users.db")
