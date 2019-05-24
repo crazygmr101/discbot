@@ -41,6 +41,7 @@ async def setxp(id, xp,bot):
     c.close()
     print(d)
     await update_ldb(bot)
+    await update_role(await bot.fetch_user(id),bot)
 
 def remove(id):
     c = sqlite3.connect("users.db")
@@ -87,6 +88,7 @@ async def gainxp(message, bot): # function to gain xp from talking
     c.commit()
     c.close()
     await update_ldb(bot)
+    await update_role(message.author, bot)
     print(d)
 
 
@@ -125,6 +127,17 @@ def ldb():
 def lkey(val):
     return val[1]
 
+# id's for roles
+BRONZE = 0
+SILVER = 0
+GOLD = 0
+DIAMOND = 0
+PLATINUM = 0
+EMERALD = 0
+
+async def update_role(user, bot):
+    pass
+
 async def update_ldb(bot):
     da = ldb()
     g = bot.get_guild(570393863559315456)
@@ -142,6 +155,7 @@ async def update_ldb(bot):
             pass
     s += "```"
     await (await g.get_channel(581278386522030115).fetch_message(581284105866706965)).edit(content=s)
+
 
 def sanitize():
     c = sqlite3.connect("users.db")
