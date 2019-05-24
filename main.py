@@ -57,7 +57,7 @@ async def restart(ctx):
 @bot.command()
 async def mod(ctx):
     if isBotDev(ctx.author) or isOfficial(ctx.author):
-        await moderate(ctx)
+        await moderate(ctx,bot)
 
 @bot.command()
 async def mixer(ctx, a):

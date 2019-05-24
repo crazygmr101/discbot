@@ -29,7 +29,7 @@ def getxp(id):
     c.close()
     return d[2]
 
-def setxp(id, xp):
+async def setxp(id, xp,bot):
     c = sqlite3.connect("users.db")
     cc = c.cursor()
     cc.execute("select rowid,id,xp,lvl from xp where id = ?", (str(id),))
@@ -40,6 +40,7 @@ def setxp(id, xp):
     c.commit()
     c.close()
     print(d)
+    await update_ldb(bot)
 
 def remove(id):
     c = sqlite3.connect("users.db")
@@ -53,10 +54,11 @@ def remove(id):
     c.close()
     print(d)
 
-def recalc():
+async def recalc(bot):
     da = ldb()
     for i in da:
-        setxp(int(i[0]),i[1])
+        await setxp(int(i[0]),i[1],bot)
+    await update_ldb(bot)
 
 async def gainxp(message, bot): # function to gain xp from talking
     # id, xp, lvl

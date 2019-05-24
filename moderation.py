@@ -4,10 +4,10 @@ from experience import *
 from misc import *
 from shutil import copyfile
 
-async def moderate(ctx):
+async def moderate(ctx,bot):
 	m = ctx.message.content.split(' ')
 	if m[2] == "setxp":
-		setxp(ctx.message.mentions[0].id, int(m[4]))
+		await setxp(ctx.message.mentions[0].id, int(m[4]),bot)
 		embed = discord.Embed(title="XP Set",color=0xff0000)
 		embed.add_field(name="User",value=get_name(ctx.message.mentions[0]))
 		embed.add_field(name="XP",value=m[4])
