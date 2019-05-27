@@ -80,6 +80,10 @@ async def pusheen(ctx):
     await ctx.send("<:pusheenblob:575691433520922674>")
 
 @bot.command()
+async def dab(ctx):
+    await ctx.send("<o/")
+
+@bot.command()
 async def cookie(ctx):
     await ctx.send("You don't need a cookie, " + ctx.author.mention)
 
@@ -159,6 +163,9 @@ async def on_msg(message):
         message.author.bot == False and m[0] != "uwu":
         #message.author.id != "267499094090579970":
         await gainxp(message,bot)
+
+    if "owo" in message.content.split(" "):
+        await message.channel.send("..o-owo? I thought you were uwu... :cry:")
 
 bot.add_listener(on_msg, 'on_message')
 

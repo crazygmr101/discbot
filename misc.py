@@ -2,6 +2,10 @@
 import discord
 
 def get_name(member):
+    try:
+        n = member.nick
+    except:
+        return member.name
     if member.nick == None:
         return member.name
     else:

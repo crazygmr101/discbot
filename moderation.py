@@ -30,7 +30,7 @@ async def moderate(ctx,bot):
 		embed.set_thumbnail(url=ctx.message.mentions[0].avatar_url)
 		await ctx.send(embed=embed)
 	if m[2] == "recalc-all":
-		recalc()
+		await recalc(bot)
 		embed = discord.Embed(title="Levels Recalculated",color=0xff0000)
 		await ctx.send(embed=embed)
 		await leader(ctx)
