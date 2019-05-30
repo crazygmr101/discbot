@@ -37,7 +37,13 @@ async def moderate(ctx,bot):
 	if m[2] == "sanitize":
 		sanitize()
 	if m[2] == "userdump":
-		await ctx.send(userdump())
+		try:
+			await ctx.send(userdump())
+		except:
+			await ctx.send("Database too long, check console")
+		finally:
+			print(userdump())
+
 	if m[2] == "ldb-backup":
 		copyfile("users.db","users.db.b")
 		await ctx.send("Done")
