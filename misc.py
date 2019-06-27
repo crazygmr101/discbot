@@ -22,5 +22,5 @@ async def brodcast(ctx, urgent, bot):
     embed.add_field(name="Message",value=ctx.message.content[7:],inline=False)
     embed.set_thumbnail(url=ctx.author.avatar_url)
     for c in ch:
-        x = bot.get_guild(570393863559315456).get_channel(579140367207628820)
+        x = bot.get_guild(570393863559315456).get_channel(int(c))
         await x.send(embed=embed)

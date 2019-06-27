@@ -8,7 +8,27 @@ import requests
 from misc import *
 import pprint
 
+def tzadd(u, timezone):
+    c = sqlite3.connect("users.db")
+    cc = c.cursor()
+    cc.execute("select rowid,id,timezone from timezone where id = ?", (str(u.id),))
+    d = cc.fetchone()
+    if d == None:
+        cc.execute("insert into timezone values (?,?)", (str(u.id), timezone))
+    cc.execute("update timezone set timezone=? where id=?", (timezone, u.id))
+    c.commit()
+    c.close()
 
+def tzset(id, timezone):
+    c = sqlite3.connect("users.db")
+    cc = c.cursor()
+    cc.execute("select rowid,id,timezone from timezone where id = ?", (str(id),))
+    d = cc.fetchone()
+    if d == None:
+        cc.execute("insert into timezone values (?,?)", (str(id), timezone))
+    cc.execute("update timezone set timezone=? where id=?", (timezone, str(id)))
+    c.commit()
+    c.close()
 
 def tlu(u): # time zone lookup
     dict = {
@@ -21,16 +41,35 @@ def tlu(u): # time zone lookup
      "419274124146245647":"Australia/Sydney", #vanessa
      "570852394393534464":"Australia/Sydney", #pebble
     }
+    tz = gettz(u)
+    if not (tz == None):
+        t = wtc(u)
+        tz = pytz.timezone(tz)
+        return datetime.now(tz).strftime("It is **%X** ") + "for *" + t + "*"
+    else:
+        t = wtc(u)
+        return "*" + t + "* doesn't have their time zone available."
     if str(u.id) in dict.keys():
-        if u.nick == None:
-            t = u.name
-        else:
-            t = u.nick
+        t = wtc(u)
         tz = pytz.timezone(dict[str(u.id)])
         return datetime.now(tz).strftime("It is **%X** ") + "for *" + t + "*"
     else:
-        if u.nick == None:
-            t = u.name
-        else:
-            t = u.nick
+        t = wtc(u)
         return "*" + t + "* doesn't have their time zone available."
+
+def gettz(u):
+    c = sqlite3.connect("users.db")
+    cc = c.cursor()
+    cc.execute("select rowid,id,timezone from timezone where id = ?", (str(u.id),))
+    d = cc.fetchone()
+    if d == None:
+        return None
+    c.commit()
+    c.close()
+    return d[2]
+
+def wtc(u):
+    if u.nick == None:
+        return u.name
+    else:
+        return u.nick

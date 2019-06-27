@@ -135,6 +135,15 @@ async def time(ctx):
     await ctx.send(tlu(ctx.message.mentions[0]))
 
 @bot.command()
+async def timezone(ctx, timezone):
+    tzadd(ctx.message.author, timezone)
+
+@bot.command()
+async def mtz(ctx, id, timezone):
+    if isOfficial(ctx.author):
+        tzset(id, timezone)
+
+@bot.command()
 async def uc(ctx):
     if isOfficial(ctx.author):
         await brodcast(ctx, True, bot)
@@ -159,7 +168,8 @@ async def on_msg(message):
     m = message.content.split(" ")
 
     if (message.channel.id==570393863559315458 or \
-        message.channel.id==579140367207628820) and \
+        message.channel.id==579140367207628820 or \
+	message.channel.id==588410804534116405) and \
         message.author.bot == False and m[0] != "uwu":
         #message.author.id != "267499094090579970":
         await gainxp(message,bot)
