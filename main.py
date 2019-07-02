@@ -130,6 +130,18 @@ async def hug(ctx, user):
 async def lemon(ctx):
     await ctx.send('here\'s a :lemon: , {0.author.mention}'.format(ctx))
 
+#i enjoy spaghetti
+
+@bot.command()
+async def hem(ctx,amt=1):
+    try:
+        int(amt)
+        resp = "{0.author.mention}, here\'s {1} <:yarn:595037192200388621> ".format(ctx,amt)
+    except:
+        resp = "how much yarn do you want?"
+    finally:
+        await ctx.send(resp)
+
 @bot.command()
 async def time(ctx):
     await ctx.send(tlu(ctx.message.mentions[0]))
@@ -169,7 +181,7 @@ async def on_msg(message):
 
     if (message.channel.id==570393863559315458 or \
         message.channel.id==579140367207628820 or \
-	message.channel.id==588410804534116405) and \
+    message.channel.id==588410804534116405) and \
         message.author.bot == False and m[0] != "uwu":
         #message.author.id != "267499094090579970":
         await gainxp(message,bot)
